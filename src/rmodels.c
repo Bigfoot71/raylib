@@ -1200,7 +1200,13 @@ void UnloadModel(Model model)
     // NOTE: As the user could be sharing shaders and textures between models,
     // we don't unload the material but just free its maps,
     // the user is responsible for freeing models shaders and textures
-    for (int i = 0; i < model.materialCount; i++) RL_FREE(model.materials[i].maps);
+    for (int i = 0; i < model.materialCount; i++)
+    {
+        if (model.materials[i].maps != NULL)
+        {
+            RL_FREE(model.materials[i].maps);
+        }
+    }
 
     // Unload arrays
     RL_FREE(model.meshes);
